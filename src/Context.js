@@ -6,7 +6,7 @@ const AppContext = createContext();
 export const AppProvider = ({ children }) => {
 
   const baseUrl = process.env.REACT_APP_BASE_URL || "https://accusport-backend.onrender.com";
-
+  // console.log(baseUrl);  
   const [authToken, setAuthToken] = useState("");
   const [userInfo, setUserInfo] = useState({
     _id: "",
