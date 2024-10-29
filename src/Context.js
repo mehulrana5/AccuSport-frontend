@@ -39,7 +39,6 @@ export const AppProvider = ({ children }) => {
       const token = await response.json();
       setAuthToken(token.jwtToken);
       localStorage.setItem('auth-token', token.jwtToken);
-      // Assuming you'll update state or context with the token here 
     } catch (error) {
       console.error('Error during login:', error);
     }

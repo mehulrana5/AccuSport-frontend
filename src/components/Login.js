@@ -8,16 +8,6 @@ const Login = () => {
   const context = useContext(AppContext);
   const navigate = useNavigate();
 
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     await context.login(username, password);
-  //     navigate('/');
-  //   } catch (error) {
-  //     console.error('Error during login:', error);
-  //   }
-  // };
-
   async function handelLogin(email,password){
     try {
       await context.login(email,password)
