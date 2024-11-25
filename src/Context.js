@@ -10,8 +10,8 @@ export const AppProvider = ({ children }) => {
   const [authToken, setAuthToken] = useState("");
   const [userInfo, setUserInfo] = useState({
     _id: "",
-    user_email: "",
-    user_role: []
+    email: "",
+    roles: []
   });
 
   const [playerInfo, setPlayerInfo] = useState({
@@ -31,15 +31,14 @@ export const AppProvider = ({ children }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          user_email: user_email,
-          user_pwd: user_pwd,
+          email: user_email,
+          password: user_pwd,
         }),
       });
-
-      const token = await response.json();
-      setAuthToken(token.jwtToken);
-      localStorage.setItem('auth-token', token.jwtToken);
-      // Assuming you'll update state or context with the token here 
+      const data = await response.json();
+      if (response.status !== 200) return alert(data.error)
+      setAuthToken(data.jwtToken);
+      localStorage.setItem('auth-token', data.jwtToken);
     } catch (error) {
       console.error('Error during login:', error);
     }
@@ -58,7 +57,7 @@ export const AppProvider = ({ children }) => {
     } catch (error) {
       console.error('Error fetching user data:', error);
       alert("Login again")
-      localStorage.setItem("auth-token","")
+      localStorage.removeItem("auth-token")
       throw error;
     }
   }
@@ -70,8 +69,8 @@ export const AppProvider = ({ children }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          user_email: cred.email,
-          user_pwd: cred.password,
+          email: cred.email,
+          password: cred.password,
         }),
       });
 
@@ -90,8 +89,8 @@ export const AppProvider = ({ children }) => {
     setAuthToken("")
     setUserInfo({
       user_id: "",
-      user_email: "",
-      user_role: []
+      email: "",
+      roles: []
     })
     setPlayerInfo({
       user_id: "", // Assign the user ID to the player's user_id field
@@ -100,7 +99,6 @@ export const AppProvider = ({ children }) => {
       team_ids: [],
       _id: ""
     })
-    setAuthToken("");
     localStorage.removeItem('auth-token')
     window.location.reload();
   }
@@ -138,9 +136,9 @@ export const AppProvider = ({ children }) => {
         },
         body: JSON.stringify(cred)
       });
-      
+
       const data = await response.json();
-      if(response.status!==400){
+      if (response.status !== 400) {
         setPlayerInfo(data);
         fetchUserData();
       }
@@ -192,7 +190,7 @@ export const AppProvider = ({ children }) => {
       console.log(error);
     }
   };
-  const updateTeamPlayers = async (leader,players, teamId) => {
+  const updateTeamPlayers = async (leader, players, teamId) => {
     try {
       const response = await fetch(`${baseUrl}/updateTeamPlayers`, {
         method: "PUT",
@@ -201,7 +199,7 @@ export const AppProvider = ({ children }) => {
           "auth-token": authToken
         },
         body: JSON.stringify({
-          team_leader:leader,
+          team_leader: leader,
           players: players,
           teamId: teamId
         })
@@ -456,6 +454,41 @@ export const AppProvider = ({ children }) => {
       console.log(error);
     }
   }
+  //   
+  // Venues  
+  // 
+  const getVenues = async () => {
+    try {
+      const response = await fetch(`${baseUrl}/getVenues`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching venues:", error.message);
+      return null;
+    }
+  };
+
+  async function autocomplete(query,category) {
+    var data = []
+    try {
+      const responce = await fetch(`${baseUrl}/getTextSearch`, {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          text:query,
+          category:category
+        }),
+      })
+      data=await responce.json()
+    }
+    catch (error) {
+      console.log(error);
+    }
+    return data
+  }
 
   // ------------------Use Effects--------------------------
   useEffect(() => {
@@ -467,7 +500,7 @@ export const AppProvider = ({ children }) => {
   }, [authToken])
 
   useEffect(() => {
-    if (authToken && userInfo.user_role.includes("player")) {
+    if (authToken && userInfo.roles.includes("player")) {
       fetchPlayers(userInfo._id, "user").then((data) => { setPlayerInfo(data[0]) })
     }
     // eslint-disable-next-line
@@ -479,7 +512,7 @@ export const AppProvider = ({ children }) => {
 
   useEffect(() => {
     setAuthToken(localStorage.getItem('auth-token'));
-}, []);
+  }, []);
   // Define the state and functions you want to provide
   const [active, setActive] = useState(0);
 
@@ -514,7 +547,9 @@ export const AppProvider = ({ children }) => {
         fetchDataPoints,
         updateDataPoints,
         createPerformanceRecord,
-        fetchPerformanceRecord
+        fetchPerformanceRecord,
+        getVenues,
+        autocomplete
       }}
     >
       {children}

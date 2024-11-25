@@ -17,7 +17,7 @@ function MatchesPage() {
         }
     };
     useEffect(() => {
-        if (context.userInfo.user_role.includes("player")) setIsPlayer(true);
+        if (context.userInfo.roles.includes("player")) setIsPlayer(true);
         else setIsPlayer(false);
         // eslint-disable-next-line
     }, [])

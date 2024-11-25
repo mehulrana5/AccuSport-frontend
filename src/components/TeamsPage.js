@@ -13,7 +13,7 @@ function TeamsPage() {
     const [player, setPlayer] = useState(false);
 
     useEffect(() => {
-        setPlayer(context.userInfo.user_role.includes("player"));
+        setPlayer(context.userInfo.roles.includes("player"));
     }, [context.userInfo, context.playerInfo])
 
     const handleFilterSubmit = (e) => {

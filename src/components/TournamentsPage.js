@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import AppContext from '../Context';
+import AutoComplete from './modals/AutoComplete';
 
 const TournamentsPage = () => {
 
@@ -10,8 +11,8 @@ const TournamentsPage = () => {
   const [isPlayer, setIsPlayer] = useState(false);
 
   useEffect(() => {
-    setIsPlayer(context.userInfo.user_role.includes("player"))
-  }, [context.userInfo.user_role])
+    setIsPlayer(context.userInfo.roles.includes("player"))
+  }, [context.userInfo.roles])
 
   function handelBtn(path) {
     navigate(`${path}`)
@@ -27,14 +28,10 @@ const TournamentsPage = () => {
     } catch (error) {
       console.log(error);
     }
-
   }
   return (
     <div className="container-1">
-      <form>
-        <input id='search_1' className='form-input' type="text" />
-        <button type='submit' onClick={handelSearch} className='blue-btn'>Search</button>
-      </form>
+      <AutoComplete clickSearch={handelSearch} category={'tournament'}/>
       <div className="tournament-buttons">
         <button className="blue-btn" onClick={() => handelBtn('/tournaments/ongoing')}>Ongoing</button>
         <button className="blue-btn" onClick={() => handelBtn('/tournaments/upcoming')}>Upcoming</button>

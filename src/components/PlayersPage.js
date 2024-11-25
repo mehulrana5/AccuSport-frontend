@@ -9,8 +9,8 @@ function PlayersPage() {
     const [player,setPlayer] =useState(false);
 
     useEffect(()=>{
-        setGuest(context.userInfo.user_role.includes("guest"));
-        setPlayer(context.userInfo.user_role.includes("player"));
+        setGuest(context.userInfo.roles.includes("guest"));
+        setPlayer(context.userInfo.roles.includes("player"));
     },[context.userInfo,context.playerInfo])
     
     const navigate = useNavigate();
