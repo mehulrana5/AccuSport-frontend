@@ -20,3 +20,28 @@
     transition: .3s;
     text-decoration: none;  
 }
+.auto_complete_container{
+    /* outline: red solid; */
+    width: 50%;
+}
+.load_container{
+    padding: 10px;
+}
+.result_container{
+    /* outline: rgb(60, 255, 0) solid; */
+    position: absolute;
+    background-color: rgb(0, 0, 0);
+    width: 50%;
+    max-width: 266px;
+}
+.result_not_found{
+    padding: 10px;
+}
+.result_item{
+    /* outline: rgb(182, 9, 145) solid; */
+    padding: 10px;
+    cursor: pointer;
+}
+.result_item:hover{
+    background-color: rgba(255, 255, 255, 0.205);
+}

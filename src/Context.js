@@ -492,10 +492,7 @@ export const AppProvider = ({ children }) => {
 
   // ------------------Use Effects--------------------------
   useEffect(() => {
-    if (authToken) {
-      console.log(authToken);
-      fetchUserData()
-    }
+    if (authToken) {fetchUserData()}
     // eslint-disable-next-line
   }, [authToken])
 

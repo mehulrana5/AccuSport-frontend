@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 
 import HomePage from './components/HomePage';
-import TournamentsPage from './components/TournamentsPage';
+import TournamentsPage from './pages/TournamentsPage';
 import TournamentCards from './components/TournamentCards';
 import NavBar from './components/NavBar';
 import TeamsPage from './components/TeamsPage';
