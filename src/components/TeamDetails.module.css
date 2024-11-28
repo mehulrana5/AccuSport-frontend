@@ -1,0 +1,33 @@
+.container_1{
+    /* outline: red solid; */
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    height: 70vh;
+    max-width: 800px;
+    justify-content: space-between;
+}
+.container_2{
+    /* outline: blue solid; */
+    width: 375px;
+    height: fit-content;
+}
+.container_3{
+    padding: 0px 0px 0px 5px;
+}
+.container_4{
+    /* outline: white solid; */
+    width: 95%;
+}
+@media screen and (max-width:400px) {
+    .container_2,
+    .container_3{
+        width: 100%;
+    }
+    .container_2 input{
+        width: 60%;
+    }
+    .container_3{
+        margin: 40px 0 0 0;
+    }
+}

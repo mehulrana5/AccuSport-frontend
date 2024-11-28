@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import AppContext from '../Context';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm, useFieldArray } from 'react-hook-form';
+import css from './CreatePlayer.module.css'
 
 function CreatePlayer() {
     const context = useContext(AppContext);
@@ -17,9 +18,9 @@ function CreatePlayer() {
 
     function isValidplayer_dob(value) {
         if (new Date() < new Date(value)) return "invalid date of birth"
-    }
+    }   
 
-    let { playerId } = useParams();
+    let { playerId,operation} = useParams();
 
     useEffect(() => {
         if (playerId) {
@@ -41,8 +42,8 @@ function CreatePlayer() {
     }, [data])
 
     return (
-        <div className='container-1'>
-            <form onSubmit={handleSubmit(onSubmit)}>
+        <div className={css.container_1}>
+            <form onSubmit={handleSubmit(onSubmit)} className='container-2'>
                 <div>
                     {
                         data ? <></>
@@ -106,7 +107,6 @@ function CreatePlayer() {
                                     <input
                                         type="text"
                                         className='form-input'
-                                        style={{ margin: "5px 5px 0 0", width: "40%" }}
                                         readOnly={1}
                                         {...register(`teams_joined[${idx}]`, {
                                             required: true,
@@ -114,13 +114,15 @@ function CreatePlayer() {
 
                                     />
                                     {
-                                        !data ? <></>
-                                            : (idx >= 0 && (
-                                                <>
-                                                    <button type="button" className='green-btn' onClick={() => navigate(`../teams/view/${data.teams_joined[idx]}`)}>View</button>
-                                                    <button type='button' className='red-btn' onClick={() => remove(idx)}>Leave</button>
-                                                </>
-                                            ))
+                                        operation === 'view' ? <></> : (
+                                            !data ? <></>
+                                                : (idx >= 0 && (
+                                                    <>
+                                                        <button type="button" className='green-btn' onClick={() => navigate(`../teams/view/${data.teams_joined[idx]}`)}>View</button>
+                                                        <button type='button' className='red-btn' onClick={() => remove(idx)}>Leave</button>
+                                                    </>
+                                                ))
+                                        )
                                     }
                                     {errors.teams_joined && errors.teams_joined[idx] && (
                                         <p style={{ color: "red" }}>Invalid Object ID format.</p>
@@ -131,15 +133,21 @@ function CreatePlayer() {
                     </div>
                 </div>
                 {
-                    data ? <>
-                        <button className='blue-btn' type="button" onClick={() => navigate("../teams/myTeams")}>My Teams</button>
-                        <button className='green-btn' type="button" onClick={() => navigate("../teams/myTeams")}>Join team</button>
-                        <button className='green-btn' type="button" onClick={() => navigate("../teams/createTeam")}>Create team</button>
-                    </>
-                        : <button type="submit" className='blue-btn'>Submit</button>
+                    operation === 'update' ?
+                        (
+                            data ? <>
+                                <button className='green-btn' type="button" onClick={() => navigate("../teams/myTeams")}>Join team</button>
+                                <button className='green-btn' type="button" onClick={() => navigate("../teams/createTeam")}>Create team</button>
+                            </>
+                                : <></>
+
+                        )
+                        : (
+                            data?<></>:<button type="submit" className='blue-btn'>Submit</button>
+                        )
                 }
             </form>
-        </div>
+        </div >
     );
 }
 

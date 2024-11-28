@@ -3,7 +3,7 @@ import AppContext from '../../Context';
 import css from './AutoComplete.module.css';
 import { useNavigate } from 'react-router-dom';
 
-function AutoComplete({ category }) {
+function AutoComplete({ category, subCategory }) {
     const context = useContext(AppContext);
     const [searchResult, setSearchResult] = useState([]);
     const [searchInput, setSearchInput] = useState("");
@@ -12,7 +12,12 @@ function AutoComplete({ category }) {
     const [loading, setLoading] = useState(false);
     const debounceTimeout = useRef(null);
     const navigate = useNavigate()
-
+    const keyWord = {
+        'tournament': 'tournament_name',
+        'match': '',
+        'team': 'team_name',
+        'player': 'player_name'
+    }
     function handleOnChange(e) {
         const inputValue = e.target.value;
         setSearchInput(inputValue)
@@ -38,9 +43,20 @@ function AutoComplete({ category }) {
     }
 
     function handleOnClick(e) {
-        navigate(`./view/${e._id}`)
-        setSearchInput(e.tournament_name)
-        setSelectedSearchResult(e.tournament_name)
+        if (category === 'tournament' && subCategory === 1) {
+            navigate(`./view/${e._id}`)
+        }
+        else if (category === 'player' && subCategory === 1) {
+            navigate(`./view/${e._id}`)
+        }
+        else if (category === 'player' && subCategory === 1) {
+            navigate(`./view/${e._id}`)
+        }
+        else if (category === 'player' && subCategory === 2){
+            navigate(`./view/${e._id}`)
+        }
+        setSearchInput(e[keyWord[category]])
+        setSelectedSearchResult(e[keyWord[category]])
         setSearchResult()
     }
 
@@ -68,10 +84,10 @@ function AutoComplete({ category }) {
                                         key={index}
                                         className={css.result_item}
                                     >
-                                        {item.tournament_name}
+                                        {item[keyWord[category]]}
                                     </div>
                                 ))
-                                : 
+                                :
                                 <div className={css.result_not_found}>No results found</div>
                             }
                         </div>

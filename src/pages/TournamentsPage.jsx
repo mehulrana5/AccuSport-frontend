@@ -18,7 +18,7 @@ const TournamentsPage = () => {
 
   return (
     <div className="container-1">
-      <AutoComplete category={'tournament'}/>
+      <AutoComplete category={'tournament'} subCategory={1}/>
       <div className="tournament-buttons">
         <button className="blue-btn" onClick={() => handelBtn('/tournaments/ongoing')}>Ongoing</button>
         <button className="blue-btn" onClick={() => handelBtn('/tournaments/upcoming')}>Upcoming</button>

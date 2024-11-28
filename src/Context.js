@@ -71,6 +71,7 @@ export const AppProvider = ({ children }) => {
         body: JSON.stringify({
           email: cred.email,
           password: cred.password,
+          roles: cred.roles
         }),
       });
 

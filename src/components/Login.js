@@ -2,6 +2,7 @@ import React, { useContext} from 'react';
 import AppContext from '../Context';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import css from './Login.module.css'
 
 
 const Login = () => {
@@ -25,7 +26,8 @@ const Login = () => {
 
   return (
     <div className="container-1">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <h2 className="form-heading">Login</h2>
+      <form onSubmit={handleSubmit(onSubmit)} className={css.container_1}>
         <h3>Email</h3>
         <input
           className='form-input'
