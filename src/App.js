@@ -29,6 +29,8 @@ import MyTournamentsPage from './pages/MyTournamentsPage';
 import CreateMatchPage from './components/CreateMatchPage';
 import MyTeams from './components/MyTeams';
 import MyMatches from './components/MyMatches';
+import OrganizationsPage from './pages/OrganizationsPage';
+import OrganizationDetailsPage from './pages/OrganizationDetailsPage';
 
 const App = () => {
 
@@ -56,8 +58,8 @@ const App = () => {
             <Route path="createTeam" exact element={<CreateTeam />} />
             <Route path="myTeams" exact element={<MyTeams />} />
           </Route>
+
           <Route path="/team-info/:teamId" exact element={<TeamDetails />} />
-          
 
           {/* <Route path="/match-info/:matchId" element={<MatchDetails />} /> */}
 
@@ -72,6 +74,10 @@ const App = () => {
             <Route path="createTournament" element={<CreateTournamentPage />} />
             <Route path="myTournaments" element={<MyTournamentsPage />} />
             <Route path=":operation/:tournamentId" element={<CreateTournamentPage />} />
+          </Route>
+
+          <Route path="/organization" element={<OrganizationsPage/>}>
+            <Route path=':operation/:organizationId' element={<OrganizationDetailsPage/>}/>
           </Route>
 
         </Routes>

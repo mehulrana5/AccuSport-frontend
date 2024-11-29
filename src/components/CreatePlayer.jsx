@@ -47,9 +47,9 @@ function CreatePlayer() {
                 <div>
                     {
                         data ? <></>
-                            : <h2 className="form-heading">Create Player Profile</h2>
+                            : <h2 className={css.heading_1}>Create Player Profile</h2>
                     }
-                    <h3>Player Name</h3>
+                    <h3 className={css.heading_1}>Player Name</h3>
                     <input
                         type="text"
                         className='form-input'
@@ -96,10 +96,9 @@ function CreatePlayer() {
                         })}
                     />
                     {errors.player_dob && <p style={{ color: "red" }}>{errors.player_dob.message}</p>}
-                    {
-                        !playerId ? <></>
-                            : <h3>Teams</h3>
-                    }
+                    
+                    {!playerId ? <></> : <h3>Teams</h3>}
+                    
                     <div>
                         {fields.map((field, idx) => {
                             return (

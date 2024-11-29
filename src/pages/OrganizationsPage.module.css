@@ -1,0 +1,27 @@
+.container_1{
+    height: 80vh;
+    padding: 20px;
+    overflow: hidden;
+}
+/* .container_2{
+    outline: red solid;
+} */
+.btn{
+    background-color: #2196f3;
+    width: fit-content;
+    border: none;
+    font-size: 16px;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    padding: 8px 15px;
+    margin: 5px 5px 0 0;
+    transition: .3s;
+    text-decoration: none;  
+}
+
+@media (hover:hover) {
+    .btn:hover{
+        background-color: #2195f3ac;
+    }
+}

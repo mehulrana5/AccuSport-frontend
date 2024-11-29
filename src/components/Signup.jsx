@@ -16,8 +16,7 @@ const Signup = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(cred);    
-    // context.register(cred);
+    context.register(cred);
   };
 
   return (
@@ -48,8 +47,8 @@ const Signup = () => {
           />
           <h3>Select Role</h3>
           <select name="roles" id="roles" className='form-input' onChange={handleCredChange}>
-            <option value="p">Player</option>
-            <option value="o">Organizer</option>
+            <option value="player">Player</option>
+            <option value="organizer">Organizer</option>
           </select>
         </div>
         <div className={css.container_2}>

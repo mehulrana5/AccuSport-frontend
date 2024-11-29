@@ -23,8 +23,8 @@ const TournamentsPage = () => {
         <button className="blue-btn" onClick={() => handelBtn('/tournaments/ongoing')}>Ongoing</button>
         <button className="blue-btn" onClick={() => handelBtn('/tournaments/upcoming')}>Upcoming</button>
         <button className="blue-btn" onClick={() => handelBtn('/tournaments/old')}>Old</button>
-        <button className='blue-btn' onClick={() => handelBtn(isPlayer ? './myTournaments' : '../login')}>My tournaments</button>
-        <button className='green-btn' onClick={() => handelBtn(isPlayer ? './createTournament' : '../login')}>Create</button>
+        {/* <button className='blue-btn' onClick={() => handelBtn(isPlayer ? './myTournaments' : '../login')}>My tournaments</button> */}
+        {/* <button className='green-btn' onClick={() => handelBtn(isPlayer ? './createTournament' : '../login')}>Create</button> */}
       </div>
       <Outlet key={location.key}/>
     </div>

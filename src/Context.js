@@ -6,21 +6,14 @@ const AppContext = createContext();
 export const AppProvider = ({ children }) => {
 
   const baseUrl = process.env.REACT_APP_BASE_URL || "https://accusport-backend.onrender.com";
-  // console.log(baseUrl);  
-  const [authToken, setAuthToken] = useState("");
-  const [userInfo, setUserInfo] = useState({
-    _id: "",
-    email: "",
-    roles: []
-  });
 
-  const [playerInfo, setPlayerInfo] = useState({
-    user_id: "", // Assign the user ID to the player's user_id field
-    player_name: "",
-    player_dob: "",
-    team_ids: [],
-    _id: ""
-  });
+  const [authToken, setAuthToken] = useState("");
+  
+  const [userInfo, setUserInfo] = useState({ _id: "", email: "", roles: [] });
+  
+  const [playerInfo, setPlayerInfo] = useState({ user_id: "", player_name: "", player_dob: "", team_ids: [], _id: "" });
+  
+  const [selectedAutoCompleteData, setSelectedAutoCompleteData] = useState(null);
 
   // ------------------functions--------------------------
   const login = async (user_email, user_pwd) => {
@@ -58,7 +51,6 @@ export const AppProvider = ({ children }) => {
       console.error('Error fetching user data:', error);
       alert("Login again")
       localStorage.removeItem("auth-token")
-      throw error;
     }
   }
   const register = async (cred) => {
@@ -71,7 +63,7 @@ export const AppProvider = ({ children }) => {
         body: JSON.stringify({
           email: cred.email,
           password: cred.password,
-          roles: cred.roles
+          roles: [cred.roles]
         }),
       });
 
@@ -472,18 +464,18 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  async function autocomplete(query,category) {
+  async function autocomplete(query, category) {
     var data = []
     try {
       const responce = await fetch(`${baseUrl}/getTextSearch`, {
         method: "POST",
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          text:query,
-          category:category
+          text: query,
+          category: category
         }),
       })
-      data=await responce.json()
+      data = await responce.json()
     }
     catch (error) {
       console.log(error);
@@ -493,7 +485,7 @@ export const AppProvider = ({ children }) => {
 
   // ------------------Use Effects--------------------------
   useEffect(() => {
-    if (authToken) {fetchUserData()}
+    if (authToken) { fetchUserData() }
     // eslint-disable-next-line
   }, [authToken])
 
@@ -547,7 +539,9 @@ export const AppProvider = ({ children }) => {
         createPerformanceRecord,
         fetchPerformanceRecord,
         getVenues,
-        autocomplete
+        autocomplete,
+        setSelectedAutoCompleteData,
+        selectedAutoCompleteData
       }}
     >
       {children}

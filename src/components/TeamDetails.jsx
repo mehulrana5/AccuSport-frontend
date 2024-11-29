@@ -139,7 +139,7 @@ function TeamDetails() {
                 <div className={css.container_4}>
                     {operation1 === 'view' ? <></> :
                     <div className={css.container_3}>
-                        <h3>Search</h3>
+                        <h3 className={css.heading_1}>Search</h3>
                         <AutoComplete category={'player'} subCategory={2} />
                     </div>
                     }

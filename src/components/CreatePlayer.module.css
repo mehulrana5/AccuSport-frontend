@@ -1,4 +1,7 @@
 .container_1{
     width: 90%;
-    min-width: 500px;
+    min-width: 300px;
+}
+.heading_1{
+    width: fit-content;
 }

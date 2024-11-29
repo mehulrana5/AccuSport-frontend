@@ -19,6 +19,9 @@
     /* outline: white solid; */
     width: 95%;
 }
+.heading_1{
+    width: fit-content;
+}
 @media screen and (max-width:400px) {
     .container_2,
     .container_3{

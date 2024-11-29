@@ -13,6 +13,7 @@ function AutoComplete({ category, subCategory }) {
     const debounceTimeout = useRef(null);
     const navigate = useNavigate()
     const keyWord = {
+        'organization':'organization_name',
         'tournament': 'tournament_name',
         'match': '',
         'team': 'team_name',
@@ -43,7 +44,10 @@ function AutoComplete({ category, subCategory }) {
     }
 
     function handleOnClick(e) {
-        if (category === 'tournament' && subCategory === 1) {
+        if (category === 'organization' && subCategory === 1) {
+            navigate(`./view/${e._id}`)
+        }
+        else if (category === 'tournament' && subCategory === 1) {
             navigate(`./view/${e._id}`)
         }
         else if (category === 'player' && subCategory === 1) {
@@ -55,6 +59,7 @@ function AutoComplete({ category, subCategory }) {
         else if (category === 'player' && subCategory === 2){
             navigate(`./view/${e._id}`)
         }
+        context.setSelectedAutoCompleteData(e)
         setSearchInput(e[keyWord[category]])
         setSelectedSearchResult(e[keyWord[category]])
         setSearchResult()
