@@ -24,24 +24,43 @@ function OrganizationDetailsPage() {
             {
                 orgData ?
                     <>
-                        <div className={css.container_2}>
+                        <div className={css.container_3}>
                             <h3>Organization Name</h3>
                             <input type="text" defaultValue={orgData?.organization_name} className={css.input} readOnly={operation === 'view'} />
                             <h3>Description</h3>
                             <textarea name="description" id="description" defaultValue={orgData?.description} className={`${css.input} ${css.description}`} readOnly={operation === 'view'} />
                         </div>
+                        {/* <div className={css.container_3}>
+                            <h3>Match Admins</h3>
+                        </div> */}
                         <div className={css.container_3}>
                             <h3>Tournaments</h3>
-                            {torData?.map((field, idx) => {
-                                return (
-                                    <div key={idx} className={css.container_4}>
-                                        <div className={css.container_5_1} title={field.tournament_name}>{field.tournament_name}</div>
-                                        <div className={css.container_5_2}>{field.sport_type}</div>
-                                        <div className={css.container_5_3}>{new Date(field.start_date_time).toLocaleDateString()}</div>
-                                        <button onClick={() => handleViewClick(idx)} className={css.viewBtn}>View</button>
-                                    </div>
-                                )
-                            })}
+                            <table className={css.table_1}>
+                                {torData?.map((field, idx) => {
+                                    return (
+                                        <tr key={idx} className={css.container_4}>
+                                            <td
+                                                className={css.container_5_1}
+                                                title={field.tournament_name}
+                                                data-label={"Tournamnet Name"}
+                                            >{field.tournament_name}</td>
+                                            <td
+                                                className={css.container_5_2}
+                                                data-label={"Type"}
+                                            >{field.sport_type}</td>
+                                            <td
+                                                className={css.container_5_3}
+                                                data-label={"Date"}
+                                            >{new Date(field.start_date_time).toLocaleDateString()}</td>
+                                            <td className={css.container_5_4}>
+                                                <button onClick={() => handleViewClick(idx)} className={`${css.btn} ${css.viewBtn}`}>View</button>
+                                                <button onClick={() => handleViewClick(idx)} className={`${css.btn} ${css.updateBtn}`}>Update</button>
+                                                <button onClick={() => handleViewClick(idx)} className={`${css.btn} ${css.deleteBtn}`}>Delete</button>
+                                            </td>
+                                        </tr>
+                                    )
+                                })}
+                            </table>
                         </div>
                     </>
                     : <></>

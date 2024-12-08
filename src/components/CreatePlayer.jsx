@@ -3,6 +3,8 @@ import AppContext from '../Context';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm, useFieldArray } from 'react-hook-form';
 import css from './CreatePlayer.module.css'
+import blankAvatarProfile from '../assets/blank-avatar-profile-picture.jpg'
+import { ConvertToBase64 } from '../utils/ConvertToBase64';
 
 function CreatePlayer() {
     const context = useContext(AppContext);
@@ -10,6 +12,7 @@ function CreatePlayer() {
     const { register, handleSubmit, formState: { errors }, setValue, control } = useForm();
     const { fields, remove } = useFieldArray({ name: "teams_joined", control });
     const [data, setData] = useState();
+    const [avatar, setAvatar] = useState(null);
     const onSubmit = (data) => { context.createPlayer(data).then(() => { navigate('/') }) }
 
     function isValidName(value) {
@@ -18,9 +21,15 @@ function CreatePlayer() {
 
     function isValidplayer_dob(value) {
         if (new Date() < new Date(value)) return "invalid date of birth"
-    }   
+    }
 
-    let { playerId,operation} = useParams();
+    async function handelAvatarChange(e) {
+        const file = e.target.files[0]
+        const base64 = await ConvertToBase64(file)
+        console.log(base64);
+    }
+
+    let { playerId, operation } = useParams();
 
     useEffect(() => {
         if (playerId) {
@@ -45,19 +54,20 @@ function CreatePlayer() {
         <div className={css.container_1}>
             <form onSubmit={handleSubmit(onSubmit)} className='container-2'>
                 <div>
-                    {
-                        data ? <></>
-                            : <h2 className={css.heading_1}>Create Player Profile</h2>
-                    }
+                    {data ? <></> : <h2 className={css.heading_1}>Create Player Profile</h2>}
+                    <div className={css.container_2}>
+                        <h3>Avatar</h3>
+                        <label htmlFor="avatar">
+                            <img src={avatar || blankAvatarProfile} alt="" srcSet="" className={css.img_container_1} />
+                        </label>
+                        <input name='avatar' id='avatar' accept='.jpeg, .png, .jpg' type='file' className={css.avatar_input} onChange={(e) => handelAvatarChange(e)} />
+                    </div>
                     <h3 className={css.heading_1}>Player Name</h3>
                     <input
                         type="text"
                         className='form-input'
                         readOnly={playerId}
-                        {...register('player_name', {
-                            required: true,
-                            validate: isValidName
-                        })}
+                        {...register('player_name', { required: true, validate: isValidName })}
                     />
                     <h3>Real Name</h3>
                     <input
@@ -78,9 +88,7 @@ function CreatePlayer() {
                                     type='string'
                                     className='form-input'
                                     readOnly={playerId}
-                                    {...register('player_id', {
-                                        required: true,
-                                    })}
+                                    {...register('player_id', { required: true, })}
                                 />
                             </div>
                             : <></>
@@ -90,15 +98,12 @@ function CreatePlayer() {
                         type='date'
                         className='form-input'
                         readOnly={playerId}
-                        {...register('player_dob', {
-                            required: true,
-                            validate: isValidplayer_dob
-                        })}
+                        {...register('player_dob', { required: true, validate: isValidplayer_dob })}
                     />
                     {errors.player_dob && <p style={{ color: "red" }}>{errors.player_dob.message}</p>}
-                    
+
                     {!playerId ? <></> : <h3>Teams</h3>}
-                    
+
                     <div>
                         {fields.map((field, idx) => {
                             return (
@@ -142,7 +147,7 @@ function CreatePlayer() {
 
                         )
                         : (
-                            data?<></>:<button type="submit" className='blue-btn'>Submit</button>
+                            data ? <></> : <button type="submit" className='blue-btn'>Submit</button>
                         )
                 }
             </form>

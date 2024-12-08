@@ -19,9 +19,15 @@
     transition: .3s;
     text-decoration: none;  
 }
+.green_btn{
+    background-color: #4CAF50;
+}
 
 @media (hover:hover) {
     .btn:hover{
         background-color: #2195f3ac;
+    }
+    .green_btn:hover{
+        background-color: #2f6f31;
     }
 }

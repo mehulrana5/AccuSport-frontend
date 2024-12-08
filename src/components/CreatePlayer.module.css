@@ -2,6 +2,18 @@
     width: 90%;
     min-width: 300px;
 }
+.container_2{
+    /* outline: red solid; */
+}
+.avatar_input{
+    /* outline: blue solid; */
+    display: none;
+}
+.img_container_1{
+    max-width: 100px;
+    max-height: 100px;
+    cursor: pointer;
+}
 .heading_1{
     width: fit-content;
 }
