@@ -9,10 +9,9 @@ import { ConvertToBase64 } from '../utils/ConvertToBase64';
 function CreatePlayer() {
     const context = useContext(AppContext);
     const navigate = useNavigate();
-    const { register, handleSubmit, formState: { errors }, setValue, control } = useForm();
+    const { register, handleSubmit, formState: { errors }, setValue, control, watch } = useForm({ defaultValues: { avatar: null } });
     const { fields, remove } = useFieldArray({ name: "teams_joined", control });
     const [data, setData] = useState();
-    const [avatar, setAvatar] = useState(null);
     const onSubmit = (data) => { context.createPlayer(data).then(() => { navigate('/') }) }
 
     function isValidName(value) {
@@ -30,6 +29,7 @@ function CreatePlayer() {
     }
 
     let { playerId, operation } = useParams();
+    const avatar = watch("avatar");
 
     useEffect(() => {
         if (playerId) {
@@ -46,6 +46,7 @@ function CreatePlayer() {
             const formattedDate = new Date(data.player_dob).toLocaleDateString("en-CA");
             setValue("player_dob", formattedDate);
             setValue("teams_joined", data.teams_joined)
+            setValue("avatar", data.avatar)
         }
         // eslint-disable-next-line
     }, [data])
@@ -60,7 +61,15 @@ function CreatePlayer() {
                         <label htmlFor="avatar">
                             <img src={avatar || blankAvatarProfile} alt="" srcSet="" className={css.img_container_1} />
                         </label>
-                        <input name='avatar' id='avatar' accept='.jpeg, .png, .jpg' type='file' className={css.avatar_input} onChange={(e) => handelAvatarChange(e)} />
+                        <input
+                            name='avatar'
+                            id='avatar'
+                            accept='.jpeg, .png, .jpg'
+                            type='file'
+                            className={css.avatar_input}
+                            onChange={(e) => handelAvatarChange(e)}
+                            {...register("avatar")}
+                        />
                     </div>
                     <h3 className={css.heading_1}>Player Name</h3>
                     <input

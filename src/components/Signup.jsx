@@ -1,14 +1,13 @@
 import React, { useContext, useState } from 'react';
 import AppContext from '../Context';
 import css from './Signup.module.css'
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
 
-  const [cred, setCred] = useState({
-    email: "",
-    password: "",
-    roles:"player"
-  });
+  const navigate=useNavigate()
+
+  const [cred, setCred] = useState({email: "",password: "",roles:"player"});
 
   const context = useContext(AppContext)
 
@@ -17,6 +16,7 @@ const Signup = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     context.register(cred);
+    navigate('../')
   };
 
   return (

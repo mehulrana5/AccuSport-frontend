@@ -8,11 +8,11 @@ export const AppProvider = ({ children }) => {
   const baseUrl = process.env.REACT_APP_BASE_URL || "https://accusport-backend.onrender.com";
 
   const [authToken, setAuthToken] = useState("");
-  
+
   const [userInfo, setUserInfo] = useState({ _id: "", email: "", roles: [] });
-  
+
   const [playerInfo, setPlayerInfo] = useState({ user_id: "", player_name: "", player_dob: "", team_ids: [], _id: "" });
-  
+
   const [selectedAutoCompleteData, setSelectedAutoCompleteData] = useState(null);
 
   // ------------------functions--------------------------
@@ -463,11 +463,30 @@ export const AppProvider = ({ children }) => {
       return null;
     }
   };
+  //   
+  // Organization  
+  //
+  const fetchOrg = async (data) => {
+    try {
+      const response = await fetch(`${baseUrl}/getOrg`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ query: data.query, fetchBy: data.fetchBy })
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const res = await response.json();
+      return res;
+    } catch (error) {
+      console.log("Error fetching organization:", error);
+    }
+  };
 
   async function autocomplete(query, category) {
     var data = []
     try {
-      const responce = await fetch(`${baseUrl}/getTextSearch`, {
+      const response = await fetch(`${baseUrl}/getTextSearch`, {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -475,7 +494,7 @@ export const AppProvider = ({ children }) => {
           category: category
         }),
       })
-      data = await responce.json()
+      data = await response.json()
     }
     catch (error) {
       console.log(error);
@@ -541,7 +560,8 @@ export const AppProvider = ({ children }) => {
         getVenues,
         autocomplete,
         setSelectedAutoCompleteData,
-        selectedAutoCompleteData
+        selectedAutoCompleteData,
+        fetchOrg
       }}
     >
       {children}
